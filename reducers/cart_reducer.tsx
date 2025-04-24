@@ -1,5 +1,3 @@
-import { ActionTypes } from "@/actions";
-
 // Define action types as enum for better type safety
 export enum CartActionTypes {
   ADD_TO_CART = "ADD_TO_CART",
@@ -7,19 +5,20 @@ export enum CartActionTypes {
   COUNT_CART_TOTALS = "COUNT_CART_TOTALS",
   REMOVE_CART_ITEM = "REMOVE_CART_ITEM",
   TOGGLE_CART_ITEM_AMOUNT = "TOGGLE_CART_ITEM_AMOUNT",
+  LOAD_CART = "LOAD_CART",
 }
 
-// Define action types as enum for better type safety
+// Define action types as union type for better type safety
 export type CartAction =
-  | { type: ActionTypes.ADD_TO_CART; payload: AddToCartPayload }
-  | { type: ActionTypes.REMOVE_CART_ITEM; payload: RemoveCartItemPayload }
+  | { type: CartActionTypes.ADD_TO_CART; payload: AddToCartPayload }
+  | { type: CartActionTypes.REMOVE_CART_ITEM; payload: RemoveCartItemPayload }
   | {
-      type: ActionTypes.TOGGLE_CART_ITEM_AMOUNT;
+      type: CartActionTypes.TOGGLE_CART_ITEM_AMOUNT;
       payload: ToggleCartItemAmountPayload;
     }
-  | { type: ActionTypes.LOAD_CART; payload: CartItem[] }
-  | { type: ActionTypes.CLEAR_CART }
-  | { type: ActionTypes.COUNT_CART_TOTALS };
+  | { type: CartActionTypes.LOAD_CART; payload: CartItem[] }
+  | { type: CartActionTypes.CLEAR_CART }
+  | { type: CartActionTypes.COUNT_CART_TOTALS };
 
 // Define interfaces for your data structures
 export interface Guitar {
@@ -43,9 +42,9 @@ export interface CartItem {
 
 export interface CartState {
   cart: CartItem[];
-  total_items?: number;
-  total_amount?: number;
-  shipping_fee: number;
+  total_items: number; // Non-optional
+  total_amount: number; // Non-optional
+  shipping_fee: number; // Non-optional
 }
 
 // Define action payload types
@@ -68,11 +67,13 @@ export const initialCartState: CartState = {
   cart: [],
   total_items: 0,
   total_amount: 0,
+  shipping_fee: 553499, // Default shipping fee
 };
 
+// Cart Reducer
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
-    case ActionTypes.ADD_TO_CART: {
+    case CartActionTypes.ADD_TO_CART: {
       const { id, amount, guitar } = action.payload;
       const tempItem = state.cart.find((i) => i.id === id);
 
@@ -102,12 +103,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       return { ...state, cart: [...state.cart, newItem] };
     }
 
-    case ActionTypes.REMOVE_CART_ITEM: {
+    case CartActionTypes.REMOVE_CART_ITEM: {
       const tempCart = state.cart.filter((item) => item.id !== action.payload);
       return { ...state, cart: tempCart };
     }
 
-    case ActionTypes.TOGGLE_CART_ITEM_AMOUNT: {
+    case CartActionTypes.TOGGLE_CART_ITEM_AMOUNT: {
       const { id, value } = action.payload;
       const tempCart = state.cart.map((item) => {
         if (item.id === id) {
@@ -130,11 +131,11 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       return { ...state, cart: tempCart };
     }
 
-    case ActionTypes.CLEAR_CART: {
+    case CartActionTypes.CLEAR_CART: {
       return { ...state, cart: [] };
     }
 
-    case ActionTypes.COUNT_CART_TOTALS: {
+    case CartActionTypes.COUNT_CART_TOTALS: {
       const { total_items, total_amount } = state.cart.reduce(
         (total, cartItem) => {
           const { amount, price } = cartItem;
@@ -146,12 +147,16 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
       );
       return { ...state, total_items, total_amount };
     }
-    case ActionTypes.LOAD_CART:
-      return { ...state, cart: action.payload };
 
-    default:
-      const exhaustiveCheck: never = action;
-      throw new Error(`Unhandled action type: ${exhaustiveCheck}`);
+    case CartActionTypes.LOAD_CART: {
+      return { ...state, cart: action.payload };
+    }
+
+    default: {
+      // Handle unhandled actions
+      const _exhaustiveCheck: never = action;
+      throw new Error(`Unhandled action type: ${JSON.stringify(action)}`);
+    }
   }
 };
 
