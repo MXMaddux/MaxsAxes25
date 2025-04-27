@@ -1,7 +1,0 @@
-MONGODB_URI=mongodb+srv://maxmaddux:tw0D0rk$@maxs-axes-cluster.bqiemx8.mongodb.net/maxs-axes?retryWrites=true&w=majority&appName=maxs-axes-cluster
-NEXT_PUBLIC_DOMAIN=http://localhost:3000
-NEXT_PUBLIC_API_DOMAIN=http://localhost:3000/api
-NEXTAUTH_URL=http://localhost:3000
-***REMOVED***=***REMOVED***
-GOOGLE_CLIENT_ID=601745967997-3nd2bi32hh34ojan6b7ddt0hfo1udrfg.apps.googleusercontent.com
-***REMOVED***=***REMOVED***
