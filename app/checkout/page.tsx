@@ -12,11 +12,6 @@ const CheckoutPage = () => {
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
   );
-  console.log(
-    "Stripe Publishable Key:",
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-  );
-  console.log("Stripe Secret Key:", process.env.***REMOVED***);
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-blue-900">
