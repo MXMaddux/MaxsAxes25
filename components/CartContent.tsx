@@ -7,17 +7,8 @@ import CartItem from "./CartItem";
 import CartTotals from "./CartTotals";
 import { useCartContext } from "@/store/cart_context";
 
-interface CartItemProps {
-  _id: string; // Use _id consistently
-  image: string;
-  model: string;
-  price: number;
-  amount: number;
-}
-
 const CartContent = () => {
   const { cart, clearCart } = useCartContext();
-  console.log("Cart State in CartContent:", cart);
 
   return (
     <section className="py-20 bg-blue-900 h-full">

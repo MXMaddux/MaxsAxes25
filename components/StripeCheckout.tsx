@@ -5,6 +5,7 @@ import { useCartContext } from "@/store/cart_context";
 import { useUserContext } from "@/store/user_context";
 import { useRouter } from "next/navigation";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import { StripeCardElementChangeEvent } from "@stripe/stripe-js";
 
 import axios from "axios";
 import { formatPrice } from "@/utils/helpers";
@@ -47,7 +48,7 @@ const CheckoutForm = () => {
   }, [cart, shipping_fee, total_amount]);
 
   // Handle changes in the CardElement
-  const handleChange = (event: any) => {
+  const handleChange = (event: StripeCardElementChangeEvent) => {
     setDisabled(event.empty);
     setError(event.error ? event.error.message : null);
   };

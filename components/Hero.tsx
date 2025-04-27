@@ -10,7 +10,7 @@ const Hero = () => {
       {/* Text Content */}
       <article className="text-left w-full lg:w-[50%] p-2 lg:p-0 mx-auto my-auto">
         <h1 className="text-5xl text-blue-50 font-bold">
-          Max's Axes <br />
+          Max&apos;s Axes <br />
           <div className="w-[9rem] h-[0.25rem] bg-blue-500 mt-[0.25rem]"></div>
         </h1>
         <p className="text-blue-50 text-lg mt-2">

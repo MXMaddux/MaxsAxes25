@@ -5,9 +5,17 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-03-31.basil", // Use the latest API version
 });
 
+// Define the structure of a cart item
+interface CartItem {
+  id: string; // Unique identifier for the item
+  name: string; // Name of the item
+  price: number; // Price of the item
+  quantity: number; // Quantity of the item in the cart
+}
+
 // Define the expected request body type
 interface PaymentRequestBody {
-  cart: any[]; // Replace `any[]` with a more specific CartItem type if available
+  cart: CartItem[];
   shipping_fee: number;
   total_amount: number;
 }

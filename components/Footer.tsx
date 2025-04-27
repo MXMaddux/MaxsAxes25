@@ -4,7 +4,7 @@ const Footer = () => {
       <h5 className="text-blue-50 m-[.1rem] font-normal transform-none leading-5">
         &copy; {new Date().getFullYear()}
       </h5>
-      <span className="text-blue-400">Max's Axes</span>
+      <span className="text-blue-400">Max&apos;s Axes</span>
       <h5 className="text-blue-50 m-[.1rem] font-normal transform-none leading-5">
         All rights reserved
       </h5>
