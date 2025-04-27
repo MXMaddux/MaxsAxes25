@@ -1,4 +1,3 @@
-// cart_context.tsx
 "use client";
 
 import React, { useEffect, useContext, useReducer } from "react";
@@ -11,13 +10,13 @@ import { Guitar } from "@/reducers/cart_reducer";
 
 interface CartContextValue extends ReducerCartState {
   addToCart: (
-    id: string,
+    _id: string, // Updated to use _id
     amount: number,
     shipping_fee: number,
     guitar: Guitar
   ) => void;
-  removeItem: (id: string) => void;
-  toggleAmount: (id: string, value: "inc" | "dec") => void;
+  removeItem: (_id: string) => void; // Updated to use _id
+  toggleAmount: (_id: string, value: "inc" | "dec") => void; // Updated to use _id
   clearCart: () => void;
 }
 
@@ -30,9 +29,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const cart = localStorage.getItem("cart");
+    const parsedCart = cart ? JSON.parse(cart) : [];
+    console.log("Loaded Cart from localStorage:", parsedCart);
     dispatch({
       type: CartActionTypes.LOAD_CART,
-      payload: cart ? JSON.parse(cart) : [],
+      payload: parsedCart,
     });
   }, []);
 
@@ -44,25 +45,27 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, [state.cart]);
 
   const addToCart = (
-    id: string,
+    _id: string, // Updated to use _id
     amount: number,
     shipping_fee: number,
     guitar: Guitar
   ) => {
     dispatch({
       type: CartActionTypes.ADD_TO_CART,
-      payload: { id, amount, shipping_fee, guitar },
+      payload: { _id, amount, shipping_fee, guitar },
     });
   };
 
-  const removeItem = (id: string) => {
-    dispatch({ type: CartActionTypes.REMOVE_CART_ITEM, payload: id });
+  const removeItem = (_id: string) => {
+    // Updated to use _id
+    dispatch({ type: CartActionTypes.REMOVE_CART_ITEM, payload: _id });
   };
 
-  const toggleAmount = (id: string, value: "inc" | "dec") => {
+  const toggleAmount = (_id: string, value: "inc" | "dec") => {
+    // Updated to use _id
     dispatch({
       type: CartActionTypes.TOGGLE_CART_ITEM_AMOUNT,
-      payload: { id, value },
+      payload: { _id, value },
     });
   };
 

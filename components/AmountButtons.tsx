@@ -13,7 +13,7 @@ const AmountButtons: React.FC<AmountButtonsProps> = ({
   amount,
 }) => {
   return (
-    <div className="grid w-[140px] grid-cols-3 items-center justify-items-center">
+    <div className="grid w-[140px] grid-cols-3 items-center justify-items-center ml-3">
       <button
         type="button"
         className="flex h-8 w-8 items-center justify-center border-none bg-transparent p-0 text-white hover:text-gray-300 focus:outline-none"

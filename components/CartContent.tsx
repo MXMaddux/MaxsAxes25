@@ -1,4 +1,3 @@
-// CartContent.tsx
 "use client";
 
 import React from "react";
@@ -9,7 +8,7 @@ import CartTotals from "./CartTotals";
 import { useCartContext } from "@/store/cart_context";
 
 interface CartItemProps {
-  id: string;
+  _id: string; // Use _id consistently
   image: string;
   model: string;
   price: number;
@@ -18,13 +17,14 @@ interface CartItemProps {
 
 const CartContent = () => {
   const { cart, clearCart } = useCartContext();
+  console.log("Cart State in CartContent:", cart);
 
   return (
-    <section className="py-20 bg-gray-100">
+    <section className="py-20 bg-blue-900 h-full">
       <div className="w-[90vw] max-w-[1170px] mx-auto px-4">
         <CartColumns />
-        {cart.map((item: CartItemProps) => (
-          <CartItem key={item.id} {...item} />
+        {cart.map((item) => (
+          <CartItem key={item._id} {...item} />
         ))}
         <hr className="my-8 border-gray-300" />
         <div className="flex justify-between mt-8">

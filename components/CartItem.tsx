@@ -1,4 +1,3 @@
-// CartItem.tsx
 "use client";
 
 import React from "react";
@@ -9,7 +8,7 @@ import { formatPrice } from "@/utils/helpers";
 import Image from "next/image";
 
 interface CartItemProps {
-  id: string;
+  _id: string;
   image: string;
   model: string;
   price: number;
@@ -17,7 +16,7 @@ interface CartItemProps {
 }
 
 const CartItem: React.FC<CartItemProps> = ({
-  id,
+  _id,
   image,
   model,
   price,
@@ -26,15 +25,16 @@ const CartItem: React.FC<CartItemProps> = ({
   const { removeItem, toggleAmount } = useCartContext();
 
   const increase = () => {
-    toggleAmount(id, "inc");
+    toggleAmount(_id, "inc");
   };
 
   const decrease = () => {
-    toggleAmount(id, "dec");
+    toggleAmount(_id, "dec");
   };
 
   return (
-    <article className="grid grid-cols-[1fr_auto_auto_auto_auto] gap-4 items-center mb-8">
+    <article className="grid grid-cols-[316px_1fr_1fr_1fr_auto] gap-4 justify-items-centeritems-center mb-8">
+      {/* Item Column */}
       <div className="flex items-center gap-4">
         <Image
           src={image}
@@ -44,20 +44,28 @@ const CartItem: React.FC<CartItemProps> = ({
           className="w-20 h-20 object-cover rounded-md"
         />
         <div>
-          <h5 className="text-sm font-medium text-gray-700">{model}</h5>
-          <h5 className="text-xs text-blue-600">{formatPrice(price)}</h5>
+          <h5 className="text-sm font-medium text-gray-300">{model}</h5>
+          <h5 className="text-xs text-blue-300">{formatPrice(price)}</h5>
         </div>
       </div>
-      <h5 className="hidden md:block text-sm font-medium text-blue-600">
+
+      {/* Price Column */}
+      <h5 className="text-sm font-medium text-blue-300 ">
         {formatPrice(price)}
       </h5>
+
+      {/* Quantity Column */}
       <AmountButtons amount={amount} increase={increase} decrease={decrease} />
-      <h5 className="hidden md:block text-sm font-medium text-blue-600">
+
+      {/* Subtotal Column */}
+      <h5 className="text-sm font-medium text-blue-300 ">
         {formatPrice(price * amount)}
       </h5>
+
+      {/* Remove Button Column */}
       <button
         className="text-white bg-red-600 p-2 rounded-md hover:bg-red-700 transition-colors w-8 h-8 flex items-center justify-center"
-        onClick={() => removeItem(id)}
+        onClick={() => removeItem(_id)}
       >
         <FaTrash className="text-sm" />
       </button>

@@ -12,14 +12,14 @@ interface AddToCartProps {
 
 const AddToCart: React.FC<AddToCartProps> = ({ guitar }) => {
   const { addToCart } = useCartContext();
-  const { id, stock } = guitar;
+  const { _id, stock } = guitar; // Updated to use _id
   const [amount, setAmount] = useState(0);
 
   const increase = () => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount + 1;
       if (tempAmount > stock) {
-        tempAmount = stock; // Cap the amount at available stock
+        tempAmount = stock;
       }
       return tempAmount;
     });
@@ -29,7 +29,7 @@ const AddToCart: React.FC<AddToCartProps> = ({ guitar }) => {
     setAmount((oldAmount) => {
       let tempAmount = oldAmount - 1;
       if (tempAmount < 0) {
-        tempAmount = 0; // Prevent negative values
+        tempAmount = 0;
       }
       return tempAmount;
     });
@@ -47,7 +47,7 @@ const AddToCart: React.FC<AddToCartProps> = ({ guitar }) => {
         <Link
           href="/cart"
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors duration-200"
-          onClick={() => addToCart(id, amount, 553499, guitar)}
+          onClick={() => addToCart(_id, amount, 553499, guitar)} // Updated to use _id
         >
           Add to Cart
         </Link>

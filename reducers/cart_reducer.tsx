@@ -22,7 +22,7 @@ export type CartAction =
 
 // Define interfaces for your data structures
 export interface Guitar {
-  id: string;
+  _id: string; // Updated to use _id
   model: string;
   brand: string;
   image: string;
@@ -31,7 +31,7 @@ export interface Guitar {
 }
 
 export interface CartItem {
-  id: string;
+  _id: string; // Updated to use _id
   model: string;
   brand: string;
   image: string;
@@ -49,16 +49,16 @@ export interface CartState {
 
 // Define action payload types
 type AddToCartPayload = {
-  id: string;
+  _id: string; // Updated to use _id
   amount: number;
   shipping_fee: number;
   guitar: Guitar;
 };
 
-type RemoveCartItemPayload = string; // just the ID
+type RemoveCartItemPayload = string; // just the _id
 
 type ToggleCartItemAmountPayload = {
-  id: string;
+  _id: string; // Updated to use _id
   value: "inc" | "dec";
 };
 
@@ -74,12 +74,15 @@ export const initialCartState: CartState = {
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
     case CartActionTypes.ADD_TO_CART: {
-      const { id, amount, guitar } = action.payload;
-      const tempItem = state.cart.find((i) => i.id === id);
+      const { _id, amount, guitar } = action.payload; // Updated to use _id
+      console.log("Adding item with _id:", _id);
+      console.log("Current Cart Before Addition:", state.cart);
+      const tempItem = state.cart.find((i) => i._id === _id); // Updated to use _id
 
       if (tempItem) {
         const tempCart = state.cart.map((cartItem) => {
-          if (cartItem.id === id) {
+          if (cartItem._id === _id) {
+            // Updated to use _id
             let newAmount = cartItem.amount + amount;
             if (newAmount > cartItem.max) {
               newAmount = cartItem.max;
@@ -88,11 +91,12 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
           }
           return cartItem;
         });
+        console.log("Updated Cart After Incrementing Amount:", tempCart);
         return { ...state, cart: tempCart };
       }
 
       const newItem: CartItem = {
-        id,
+        _id, // Updated to use _id
         model: guitar.model,
         brand: guitar.brand,
         image: guitar.image,
@@ -100,18 +104,24 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         amount,
         max: guitar.stock,
       };
+      console.log("New Item Added to Cart:", newItem);
+      console.log("Updated Cart After Adding New Item:", [
+        ...state.cart,
+        newItem,
+      ]);
       return { ...state, cart: [...state.cart, newItem] };
     }
 
     case CartActionTypes.REMOVE_CART_ITEM: {
-      const tempCart = state.cart.filter((item) => item.id !== action.payload);
+      const tempCart = state.cart.filter((item) => item._id !== action.payload); // Updated to use _id
       return { ...state, cart: tempCart };
     }
 
     case CartActionTypes.TOGGLE_CART_ITEM_AMOUNT: {
-      const { id, value } = action.payload;
+      const { _id, value } = action.payload; // Updated to use _id
       const tempCart = state.cart.map((item) => {
-        if (item.id === id) {
+        if (item._id === _id) {
+          // Updated to use _id
           let newAmount = item.amount;
           if (value === "inc") {
             newAmount = item.amount + 1;

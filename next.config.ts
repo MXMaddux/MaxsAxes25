@@ -1,6 +1,9 @@
-import type { NextConfig } from "next";
+import { readFileSync } from "fs";
+import { join } from "path";
 
-const nextConfig: NextConfig = {
+// Define the Next.js configuration
+const nextConfig = {
+  // Image optimization settings
   images: {
     remotePatterns: [
       {
@@ -11,6 +14,15 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // HTTPS configuration for local development (optional)
+  devServer: {
+    https: {
+      key: readFileSync(join(__dirname, "localhost.key")),
+      cert: readFileSync(join(__dirname, "localhost.crt")),
+    },
+  },
 };
 
-export default nextConfig;
+// Export the configuration using module.exports
+module.exports = nextConfig;

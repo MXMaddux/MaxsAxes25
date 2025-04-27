@@ -15,13 +15,13 @@ const CartTotals = () => {
       <div className="border border-gray-200 rounded-lg p-6 w-full max-w-sm">
         {/* Subtotal */}
         <div className="grid grid-cols-[200px_1fr] gap-2 mb-4">
-          <h5 className="text-gray-700 font-medium">Subtotal:</h5>
-          <span className="text-blue-600">{formatPrice(total_amount)}</span>
+          <h5 className="text-gray-400 font-medium">Subtotal:</h5>
+          <span className="text-blue-400">{formatPrice(total_amount)}</span>
         </div>
 
         {/* Shipping Fee */}
         <div className="grid grid-cols-[200px_1fr] gap-2 mb-6">
-          <p className="text-gray-500 text-sm capitalize">Shipping Fee:</p>
+          <p className="text-gray-400 text-sm capitalize">Shipping Fee:</p>
           <span className="text-gray-400">{formatPrice(shipping_fee)}</span>
         </div>
 
@@ -29,8 +29,8 @@ const CartTotals = () => {
 
         {/* Order Total */}
         <div className="grid grid-cols-[200px_1fr] gap-2 mb-6">
-          <h4 className="text-gray-700 font-bold">Order Total:</h4>
-          <span className="text-blue-600 font-bold">
+          <h4 className="text-gray-400 font-bold">Order Total:</h4>
+          <span className="text-blue-400 font-bold">
             {formatPrice(total_amount + shipping_fee)}
           </span>
         </div>

@@ -1,31 +1,31 @@
-"use client";
-
-import React from "react";
-import { useParams } from "next/navigation";
-import { guitar_list } from "@/guitars_list";
 import Link from "next/link";
 import AddToCart from "@/components/AddToCart";
 import { formatPrice } from "@/utils/helpers";
 import Image from "next/image";
 
 interface Guitar {
-  id: string;
+  _id: string;
   model: string;
   brand: string;
   price: number;
   description: string;
   image: string;
+  stock: number;
 }
 
-const SingleGuitarPage = () => {
-  const params = useParams();
+interface PageProps {
+  params: { id: string };
+}
+
+const SingleGuitarPage = async ({ params }: PageProps) => {
   const { id } = params;
 
-  const guitar = guitar_list.find((guitar) => guitar.id === id);
-
-  if (!guitar) {
+  const response = await fetch(`http://localhost:3000/api/guitars/${id}`);
+  if (!response.ok) {
     return <div className="text-center py-20">Guitar not found</div>;
   }
+
+  const guitar: Guitar = await response.json();
 
   return (
     <main className="py-20 bg-blue-800">
@@ -34,7 +34,7 @@ const SingleGuitarPage = () => {
           href="/axes"
           className="inline-block bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition-colors mb-8"
         >
-          back to axes
+          Back to axes
         </Link>
 
         <div className="grid gap-16 mt-8 md:grid-cols-2 md:items-center">
@@ -56,7 +56,7 @@ const SingleGuitarPage = () => {
               {guitar.description}
             </p>
             <p className="text-white grid grid-cols-[125px_1fr]">
-              <span className="font-bold text-blue-300">Brand :</span>
+              <span className="font-bold text-blue-300">Brand:</span>
               {guitar.brand}
             </p>
             <hr className="border-gray-600 my-4" />

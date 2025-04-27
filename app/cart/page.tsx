@@ -10,7 +10,7 @@ const CartPage = () => {
 
   if (cart.length < 1) {
     return (
-      <main className="min-h-[calc(100vh-13rem)] py-20 bg-gray-100 flex items-center justify-center">
+      <main className="min-h-[calc(100vh-13rem)] h-full bg-blue-900 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-2xl font-bold text-blue-600 mb-4">
             Your cart is empty
@@ -27,7 +27,7 @@ const CartPage = () => {
   }
 
   return (
-    <main className="min-h-[calc(100vh-(20vh+10rem))] py-20 bg-gray-100">
+    <main className="min-h-[calc(100vh-(20vh+10rem))] py-20 bg-blue-900">
       <CartContent />
     </main>
   );
